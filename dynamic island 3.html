@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Island</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            height: 100vh;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        .dynamic-island {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) scale(1); /* Initial scale */
+            transform-origin: top center; /* Anchor scaling to the top */
+            width: 120px;
+            height: 40px;
+            background-color: black;
+            border-radius: 20px;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            line-height: 40px;
+            transition: width 0.5s cubic-bezier(0.2, 0.8, 0.4, 1), 
+                        height 0.5s cubic-bezier(0.2, 0.8, 0.4, 1) 0.02s, 
+                        border-radius 0.5s cubic-bezier(0.2, 0.8, 0.4, 1) 0.2s;
+            overflow: hidden;
+            -webkit-tap-highlight-color: none;
+            touch-action: manipulation;
+        }
+
+        .dynamic-island.expanded {
+            width: 200px;
+            height: 100px;
+            border-radius: 25px;
+            animation: expandElastic 0.6s cubic-bezier(0.25, 0.0, 0.25, 1) 0.07s forwards;
+        }
+
+        .dynamic-content {
+            opacity: 0;
+            visibility: hidden;
+            user-select: none;
+            transition: opacity 0.5s, visibility 0s 0.5s;
+        }
+
+        .dynamic-island.expanded .dynamic-content {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s, visibility 0s 0s;
+        }
+
+        @keyframes expandElastic {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+            20% {
+                transform: translateX(-50%) scale(1.08); /* Slight overshoot */
+            }
+            100% {
+                transform: translateX(-50%) scale(1); /* Return to normal */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dynamic-island" id="dynamicIsland">
+        <div class="dynamic-content">
+            <p>Music Playing</p>
+            <p>Artist: John Doe</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('click', () => {
+            const dynamicIsland = document.getElementById('dynamicIsland');
+            dynamicIsland.classList.toggle('expanded');
+        });
+    </script>
+
+</body>
+</html>
