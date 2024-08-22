@@ -23,8 +23,9 @@
 			border: 0px;
 			background: #d6c9a3;
 			position: fixed;
-			font-size:medium;
+			font-size: medium;
 			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			user-select: none;
 		}
 
 		.dynamic-island {
@@ -110,14 +111,30 @@
 	<button class="button-test" id="buttonRight" style="right: 5%;">Toggle Notifications</button>
 
 	<script>
-		buttonLeft.addEventListener("click", () => {
+		function removeExpandedClasses(element) {
+			element.classList.forEach((className) => {
+				if (className.startsWith("expanded-")) {
+					element.classList.remove(className);
+				}
+			});
+		}
+
+		document.getElementById("buttonLeft").addEventListener("click", () => {
 			const dynamicIsland = document.getElementById("dynamicIsland");
-			dynamicIsland.classList.toggle("expanded-music");
+			if (!dynamicIsland.classList.contains("expanded-music")) {
+				removeExpandedClasses(dynamicIsland); // Remove any "expanded-*" class
+			}
+			dynamicIsland.classList.toggle("expanded-music"); // Toggle the desired class
 		});
-		buttonRight.addEventListener("click", () => {
+
+		document.getElementById("buttonRight").addEventListener("click", () => {
 			const dynamicIsland = document.getElementById("dynamicIsland");
-			dynamicIsland.classList.toggle("expanded-wide");
+			if (!dynamicIsland.classList.contains("expanded-wide")) {
+				removeExpandedClasses(dynamicIsland); // Remove any "expanded-*" class
+			}
+			dynamicIsland.classList.toggle("expanded-wide"); // Toggle the desired class
 		});
+
 	</script>
 </body>
 
